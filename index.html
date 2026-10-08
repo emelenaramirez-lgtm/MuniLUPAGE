@@ -131,11 +131,11 @@
   .candidate-card { border: 2px solid var(--c-border); border-radius: 14px; padding: 18px 20px; cursor: pointer; transition: var(--transition); margin-bottom: 12px; display: flex; align-items: center; gap: 16px; background: #fff; user-select: none; }
   .candidate-card:hover { border-color: var(--c-primary-light); box-shadow: 0 2px 12px rgba(45,95,166,0.12); }
   .candidate-card.selected { border-color: var(--c-primary); background: #edf2ff; box-shadow: 0 0 0 3px rgba(45,95,166,0.15); }
-  .candidate-avatar { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .candidate-avatar { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; padding: 4px; }
+  .candidate-avatar img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; }
   .candidate-info { flex: 1; }
   .candidate-name { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--c-text); }
   .candidate-detail { font-size: 13px; color: var(--c-muted); margin-top: 3px; }
-  .candidate-logo { display:block; width:100px; max-width:100%; height:34px; object-fit:contain; object-position:left center; margin-top:4px; }
   .candidate-number { width: 30px; height: 30px; border-radius: 8px; background: var(--c-badge); color: var(--c-primary); font-family: var(--font-head); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .candidate-card.selected .candidate-number { background: var(--c-primary); color: #fff; }
 
@@ -655,19 +655,23 @@ function resetDNI() {
 // CANDIDATOS
 // ============================================================
 function renderCandidates() {
-  const list = document.getElementById('candidateList');
+const list = document.getElementById('candidateList');
   list.innerHTML = '';
   state.candidates.forEach((c, i) => {
     const initials = c.name.split(' ').slice(0,2).map(n=>n[0]).join('');
+    const logoUrl = c.logo || `logo-lista-${i+1}.png`;
+    
     const div = document.createElement('div');
     div.className = 'candidate-card';
     div.id = 'cand_' + c.id;
     div.onclick = () => selectCandidate(c.id);
     div.innerHTML = `
-      <div class="candidate-avatar" style="background:${c.color}">${initials}</div>
+      <div class="candidate-avatar" style="background:${c.color}">
+        <img src="${logoUrl}" alt="${c.name}" onerror="this.outerHTML='${initials}'">
+      </div>
       <div class="candidate-info">
         <div class="candidate-name">${c.name}</div>
-        <img class="candidate-logo" src="${c.logo || `logo-lista-${i+1}.png`}" alt="Logo de ${c.name}" onerror="this.style.display='none'">
+        <div class="candidate-detail">${c.detail}</div>
       </div>
       <div class="candidate-number">${i+1}</div>`;
     list.appendChild(div);
