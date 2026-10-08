@@ -135,6 +135,7 @@
   .candidate-info { flex: 1; }
   .candidate-name { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--c-text); }
   .candidate-detail { font-size: 13px; color: var(--c-muted); margin-top: 3px; }
+  .candidate-logo { display:block; width:100px; max-width:100%; height:34px; object-fit:contain; object-position:left center; margin-top:4px; }
   .candidate-number { width: 30px; height: 30px; border-radius: 8px; background: var(--c-badge); color: var(--c-primary); font-family: var(--font-head); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .candidate-card.selected .candidate-number { background: var(--c-primary); color: #fff; }
 
@@ -549,9 +550,11 @@ function getDefaultState() {
       lastSync: null
     },
     candidates: [
-      { id: 1, name: 'Lista Azul', detail: 'Lista N° 1', color: '#1a3c6e' },
-      { id: 2, name: 'Lista Verde', detail: 'Lista N° 2', color: '#1a7a4a' },
-      { id: 3, name: 'Lista Roja', detail: 'Lista N° 3', color: '#c0392b' }
+     { id: 1, name: 'Visión del Futuro Estudiantil', detail: 'Lista N° 1', logo: '1.jpeg', color: '#1a3c6e' },
+     { id: 2, name: 'Generación 26', detail: 'Lista N° 2', logo: '2.jpeg', color: '#1a7a4a' },
+     { id: 3, name: 'Unión Estudiantil', detail: 'Lista N° 3', logo: '3.jpeg', color: '#c0392b' }
+     { id: 4, name: 'Liderazgo y Formación', detail: 'Lista N° 4', logo: '4.jpeg', color: '#f39c12' }
+      
     ],
     dnisDB: {
       '12345678': { name: 'Ana García López', grade: '5to Secundaria', section: 'A', voted: false },
@@ -664,7 +667,7 @@ function renderCandidates() {
       <div class="candidate-avatar" style="background:${c.color}">${initials}</div>
       <div class="candidate-info">
         <div class="candidate-name">${c.name}</div>
-        <div class="candidate-detail">${c.detail}</div>
+        <img class="candidate-logo" src="${c.logo || `logo-lista-${i+1}.png`}" alt="Logo de ${c.name}" onerror="this.style.display='none'">
       </div>
       <div class="candidate-number">${i+1}</div>`;
     list.appendChild(div);
